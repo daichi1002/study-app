@@ -3,7 +3,7 @@
     <header
       class="tw-container tw-mx-auto tw-justify-between tw-flex tw-items-center"
     >
-      <img src="../assets/images/study.png" />
+      <img class="tw-w-20" src="../assets/images/study.png" />
       <nav>
         <ul class="tw-flex tw-align-center">
           <li class="tw-text-lg tw-px-6"><a href="">記録</a></li>

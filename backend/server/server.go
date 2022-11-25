@@ -20,7 +20,7 @@ func NewGRPCServer(repos repository.Repositories) *grpc.Server {
 		)),
 	)
 
-	server := grpc.NewServer()
+	server := grpc.NewServer(options...)
 
 	pb.RegisterArticleServiceServer(server, service.NewArticleService(
 		usecase.NewArticleUsecase(repos.ArticleRepository),

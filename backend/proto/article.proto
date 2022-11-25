@@ -1,11 +1,14 @@
 // protoのバージョン
 syntax = "proto3";
+
 // メッセージ型などの名前の衝突を避けるためにパッケージ名を指定
 package article;
-// コードが自動生成されるディレクトリを指定
-option go_package = "pb/";
+
 // 他パッケージのメッセージ型をimportできる
 import "google/protobuf/timestamp.proto";
+
+// コードが自動生成されるディレクトリを指定
+option go_package = "pb/";
 
 service ArticleService {
   rpc CreateArticle(CreateArticleRequest) returns (CreateArticleResponse) {}

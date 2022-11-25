@@ -48,7 +48,11 @@ func main() {
 	// サーバーリフレクションを有効にしています。
 	// 有効にすることでシリアライズせずとも後述する`grpc_cli`で動作確認ができるようになります。
 	reflection.Register(grpcServer)
-	grpcServer.Serve(listener)
+	serverErr := grpcServer.Serve(listener)
+
+	if serverErr != nil {
+		log.Fatal(serverErr)
+	}
 }
 
 func loadEnv() {

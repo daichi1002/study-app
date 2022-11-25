@@ -1,14 +1,12 @@
 <template>
-  <div class="tw-bg-teal-300">
-    <header
-      class="tw-container tw-mx-auto tw-justify-between tw-flex tw-items-center"
-    >
-      <img class="tw-w-20" src="../assets/images/study.png" />
+  <div class="bg-teal-300">
+    <header class="container mx-auto justify-between flex items-center">
+      <img class="w-20" src="../assets/images/study.png" />
       <nav>
-        <ul class="tw-flex tw-align-center">
-          <li class="tw-text-lg tw-px-6"><a href="">記録</a></li>
-          <li class="tw-text-lg tw-px-6"><a href="">チーム分け</a></li>
-          <li class="tw-text-lg tw-px-6"><a href="">ユーザー</a></li>
+        <ul class="flex align-center">
+          <li class="text-lg px-6"><a href="">記録</a></li>
+          <li class="text-lg px-6"><a href="">チーム分け</a></li>
+          <li class="text-lg px-6"><a href="">ユーザー</a></li>
         </ul>
       </nav>
     </header>

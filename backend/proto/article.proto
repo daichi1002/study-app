@@ -1,0 +1,42 @@
+// protoのバージョン
+syntax = "proto3";
+// メッセージ型などの名前の衝突を避けるためにパッケージ名を指定
+package article;
+// コードが自動生成されるディレクトリを指定
+option go_package = "pb/";
+// 他パッケージのメッセージ型をimportできる
+import "google/protobuf/timestamp.proto";
+
+service ArticleService {
+  rpc CreateArticle(CreateArticleRequest) returns (CreateArticleResponse) {}
+  rpc GetArticles(ListArticlesRequest) returns (ListArticlesResponse) {}
+}
+
+message Article {
+  string article_id = 1;
+  string user_id = 2;
+  string title = 3;
+  string content = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message ListArticlesRequest {
+  int64 page = 1;
+  int64 page_size = 2;
+}
+
+message ListArticlesResponse {
+  repeated Article articles = 1;
+}
+
+message CreateArticleRequest {
+  string user_id = 1;
+  repeated string tag_ids = 2;
+  string title = 3;
+  string content = 4;
+}
+
+message CreateArticleResponse {
+  Article article = 1;
+}

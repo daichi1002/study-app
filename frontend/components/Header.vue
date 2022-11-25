@@ -1,16 +1,16 @@
 <template>
   <div class="tw-bg-teal-300">
     <header
-      class="tw-container tw-mx-auto tw-flex tw-justify-between tw-items-center"
+      class="tw-container tw-mx-auto tw-justify-between tw-flex tw-items-center"
     >
       <img src="../assets/images/study.png" />
-      <div>
-        <button>
-          <svg class="tw-h-6 tw-w-6 tw-fill-current" viewBox="0 0 24 24">
-            <path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z" />
-          </svg>
-        </button>
-      </div>
+      <nav>
+        <ul class="tw-flex tw-align-center">
+          <li class="tw-text-lg tw-px-6"><a href="">記録</a></li>
+          <li class="tw-text-lg tw-px-6"><a href="">チーム分け</a></li>
+          <li class="tw-text-lg tw-px-6"><a href="">ユーザー</a></li>
+        </ul>
+      </nav>
     </header>
   </div>
 </template>

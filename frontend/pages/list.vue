@@ -46,5 +46,10 @@
         </tbody>
       </table>
     </div>
+    <button
+      class="tw-fixed tw-bottom-8 tw-right-8 tw-rounded-full tw-w-24 tw-py-6 tw-bg-teal-300 hover:tw-bg-teal-500 tw-text-white tw-text-center tw-font-semibold tw-text-5xl"
+    >
+      +
+    </button>
   </div>
 </template>

@@ -49,7 +49,7 @@
     <button
       class="fixed bottom-8 right-8 rounded-full w-24 py-6 bg-teal-300 hover:bg-teal-500 text-white text-center font-semibold text-5xl"
     >
-      +
+      <NuxtLink to="/create">+</NuxtLink>
     </button>
   </div>
 </template>

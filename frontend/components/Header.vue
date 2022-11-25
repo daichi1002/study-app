@@ -4,9 +4,9 @@
       <img class="w-16" src="../assets/images/study.png" />
       <nav>
         <ul class="flex align-center">
-          <li class="text-lg px-6"><a href="">記録</a></li>
-          <li class="text-lg px-6"><a href="">チーム分け</a></li>
-          <li class="text-lg px-6"><a href="">ユーザー</a></li>
+          <li class="text-lg px-6"><NuxtLink to="/list">記録</NuxtLink></li>
+          <li class="text-lg px-6"><NuxtLink to="">チーム分け</NuxtLink></li>
+          <li class="text-lg px-6"><NuxtLink to="">ユーザー</NuxtLink></li>
         </ul>
       </nav>
     </header>

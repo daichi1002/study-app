@@ -4,8 +4,9 @@ import (
 	"backend/constant"
 	"fmt"
 	"log"
-	"os"
+	"time"
 
+	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -25,20 +26,23 @@ func NewGormHandler() *GormHandler {
 }
 
 func connectDB() (*gorm.DB, error) {
+	dbName := viper.GetString(constant.DBNameEnv)
+	dbUser := viper.GetString(constant.DBUserEnv)
+	dbHost := viper.GetString(constant.DBHostEnv)
 
-	dbHost := os.Getenv(constant.DBHostEnv)
-	dbPort := os.Getenv(constant.DBPortEnv)
-	dBName := os.Getenv(constant.DBNameEnv)
-	dbUser := os.Getenv(constant.DBUserEnv)
-	// dbPassword := os.Getenv(constant.DBPasswordEnv)
-
-	dsn := fmt.Sprintf("%v@tcp(%v:%v)/%v?charset=utf8&parseTime=True&loc=Local&timeout=10s", dbUser, dbHost, dbPort, dBName)
+	dsn := fmt.Sprintf("%v@tcp(%s)/%v?charset=utf8&parseTime=True&loc=Local&timeout=10s", dbUser, dbHost, dbName)
 	var db *gorm.DB
 	var err error
+	for i := 1; i <= constant.DBConnectRetryMaxCount; i++ {
+		db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		if err == nil {
+			break
+		}
+		time.Sleep(constant.RetryWaitTime * time.Millisecond)
+	}
 
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	migrateErr := db.AutoMigrate()
@@ -46,6 +50,5 @@ func connectDB() (*gorm.DB, error) {
 	if migrateErr != nil {
 		log.Fatal(err)
 	}
-
 	return db, nil
 }

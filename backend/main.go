@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/constant"
 	"backend/infra"
 	"backend/infra/repository/article"
 	"backend/server"
@@ -12,10 +13,13 @@ import (
 
 	domainrepo "backend/domain/repository"
 
+	"github.com/spf13/viper"
 	"google.golang.org/grpc/reflection"
 )
 
 func main() {
+	// 環境変数読み込み
+	loadEnv()
 	// DB初期化処理
 	gormHandler := infra.NewGormHandler()
 
@@ -34,7 +38,7 @@ func main() {
 		grpcServer.GracefulStop()
 	}()
 
-	listener, err := net.Listen("tcp", ":50051")
+	listener, err := net.Listen("tcp", ":8080")
 
 	if err != nil {
 		log.Fatal(err)
@@ -45,4 +49,11 @@ func main() {
 	// 有効にすることでシリアライズせずとも後述する`grpc_cli`で動作確認ができるようになります。
 	reflection.Register(grpcServer)
 	grpcServer.Serve(listener)
+}
+
+func loadEnv() {
+	viper.AutomaticEnv()
+	viper.SetDefault(constant.DBHostEnv, "db")
+	viper.SetDefault(constant.DBUserEnv, "root")
+	viper.SetDefault(constant.DBNameEnv, "dev")
 }

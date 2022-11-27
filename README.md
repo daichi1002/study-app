@@ -14,4 +14,4 @@
 
 ## other
 
-- GRPC
+- gRPC

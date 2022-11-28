@@ -1,3 +1,54 @@
+<script setup lang="ts">
+import { ArticleServiceClient } from "~/generated/article_grpc_pb";
+import {
+  ListArticlesRequest,
+  ListArticlesResponse,
+} from "~~/generated/article_pb";
+import * as grpc from "@grpc/grpc-js";
+
+const createClient = () => {
+  return new ArticleServiceClient(
+    "http://localhost:8080",
+    grpc.credentials.createInsecure()
+  );
+};
+
+const getArticles = (
+  client: ArticleServiceClient
+): Promise<ListArticlesResponse> => {
+  const request = new ListArticlesRequest();
+  request.setPage(1);
+  request.setPageSize(10);
+
+  return new Promise<ListArticlesResponse>(() => {
+    client.getArticles(request, (error, response) => {
+      if (error) {
+        return error;
+      }
+      return response?.getArticlesList();
+    });
+  });
+
+  // const response = await new Promise<ListArticlesResponse>(
+  //   (resolve, reject) => {
+  //     client.getArticles(request, (error, response) => {
+  //       if (error) {
+  //         console.error("エラーが発生しました", error);
+  //         reject(error);
+  //       }
+  //       return resolve(response);
+  //     });
+  //   }
+  // );
+};
+
+(async () => {
+  const client = createClient();
+  const result = await getArticles(client);
+  console.log(result);
+  await client.close();
+})().catch(console.error);
+</script>
 <template>
   <div class="container mx-auto">
     <div class="flex justify-center mt-10">

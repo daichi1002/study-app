@@ -1,8 +1,12 @@
 package usecase
 
 import (
+	"backend/domain/model"
 	"backend/domain/repository"
-	"backend/pb"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 type ArticleUsecase struct {
@@ -15,10 +19,32 @@ func NewArticleUsecase(repo repository.ArticleRepository) *ArticleUsecase {
 	}
 }
 
-func (u *ArticleUsecase) GetArticles(request *pb.ListArticlesRequest) (*pb.ListArticlesResponse, error) {
-	return nil, nil
+func (u *ArticleUsecase) GetArticles(c *gin.Context) {
+	articles, err := u.articleRepository.ListArticles()
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, articles)
 }
 
-func (u *ArticleUsecase) CreateArticle(request *pb.CreateArticleRequest) (*pb.CreateArticleResponse, error) {
-	return nil, nil
+func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
+	input := &model.Article{}
+	err := c.ShouldBindWith(input, binding.JSON)
+
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	insertErr := u.articleRepository.CreateArticle(input)
+
+	if insertErr != nil {
+		c.JSON(http.StatusInternalServerError, insertErr.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
 }

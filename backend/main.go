@@ -4,6 +4,7 @@ import (
 	"backend/constant"
 	"backend/infra"
 	"backend/infra/repository/article"
+	"backend/infra/repository/tag"
 	"backend/server"
 	"backend/util"
 	"time"
@@ -25,6 +26,7 @@ func main() {
 
 	repos := domainrepo.Repositories{
 		ArticleRepository: article.NewArticleRepository(gormHandler),
+		TagRepository:     tag.NewTagRepository(gormHandler),
 	}
 
 	router := gin.Default()

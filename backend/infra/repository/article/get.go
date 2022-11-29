@@ -10,11 +10,11 @@ func (r *articleRepository) ListArticles() (articles []*model.Article, err error
 			a.content,
 			a.updated_at,
 			u.name as user_name,
-			mt.name as tag
+			t.name as tag
 		`).
 		Joins("left outer join users as u on u.user_id = a.user_id").
-		Joins("left outer join tags as t on t.article_id = a.article_id").
-		Joins("left outer join mst_tag as mt on mt.mst_tag_id = t.tag_id").
+		Joins("left outer join article_tags as at on at.article_id = a.article_id").
+		Joins("left outer join tags as t on t.id = at.id").
 		Find(&articles).Error
 
 	if err != nil {

@@ -1,6 +1,6 @@
 package model
 
 type Tag struct {
-	MstTagId int    `json:"tagId"`
-	Name     string `json:"name"`
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }

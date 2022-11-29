@@ -5,7 +5,7 @@ import (
 )
 
 func (r *tagRepository) ListTags() (tags []*model.Tag, err error) {
-	err = r.DB.Table("mst_tag").Find(&tags).Error
+	err = r.DB.Table("tags").Find(&tags).Error
 
 	if err != nil {
 		return nil, err

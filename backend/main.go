@@ -6,9 +6,11 @@ import (
 	"backend/infra/repository/article"
 	"backend/server"
 	"backend/util"
+	"time"
 
 	domainrepo "backend/domain/repository"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
@@ -27,10 +29,23 @@ func main() {
 
 	router := gin.Default()
 
+	setCors(router)
+
 	server.NewApiServer(router, repos)
 
 	router.Run()
 	logger.Info("server start!")
+}
+
+func setCors(r *gin.Engine) {
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE"},
+		AllowHeaders:     []string{"Content-Type"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 }
 
 func loadEnv() {

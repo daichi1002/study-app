@@ -2,14 +2,16 @@ package infra
 
 import (
 	"backend/constant"
+	"backend/util"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
+
+var logger = util.NewLogger()
 
 type GormHandler struct {
 	DB *gorm.DB
@@ -18,7 +20,7 @@ type GormHandler struct {
 func NewGormHandler() *GormHandler {
 	conn, err := connectDB()
 	if err != nil {
-		panic(err.Error)
+		logger.Fatal(err)
 	}
 	GormHandler := new(GormHandler)
 	GormHandler.DB = conn
@@ -48,7 +50,7 @@ func connectDB() (*gorm.DB, error) {
 	migrateErr := db.AutoMigrate()
 
 	if migrateErr != nil {
-		log.Fatal(err)
+		return nil, migrateErr
 	}
 	return db, nil
 }

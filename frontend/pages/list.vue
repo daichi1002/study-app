@@ -1,53 +1,10 @@
 <script setup lang="ts">
-import { ArticleServiceClient } from "~/generated/article_grpc_pb";
-import {
-  ListArticlesRequest,
-  ListArticlesResponse,
-} from "~~/generated/article_pb";
-import * as grpc from "@grpc/grpc-js";
+import { Article } from "~/types/article";
 
-const createClient = () => {
-  return new ArticleServiceClient(
-    "http://localhost:8080",
-    grpc.credentials.createInsecure()
-  );
-};
-
-const getArticles = (
-  client: ArticleServiceClient
-): Promise<ListArticlesResponse> => {
-  const request = new ListArticlesRequest();
-  request.setPage(1);
-  request.setPageSize(10);
-
-  return new Promise<ListArticlesResponse>(() => {
-    client.getArticles(request, (error, response) => {
-      if (error) {
-        return error;
-      }
-      return response?.getArticlesList();
-    });
-  });
-
-  // const response = await new Promise<ListArticlesResponse>(
-  //   (resolve, reject) => {
-  //     client.getArticles(request, (error, response) => {
-  //       if (error) {
-  //         console.error("エラーが発生しました", error);
-  //         reject(error);
-  //       }
-  //       return resolve(response);
-  //     });
-  //   }
-  // );
-};
-
-(async () => {
-  const client = createClient();
-  const result = await getArticles(client);
-  console.log(result);
-  await client.close();
-})().catch(console.error);
+// const config = await useRuntimeConfig();
+const { data: articles } = await useFetch<Article[]>(
+  `http://localhost:8080/list`
+);
 </script>
 <template>
   <div class="container mx-auto">
@@ -73,26 +30,11 @@ const getArticles = (
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="border px-4 py-2">Intro to CSS</td>
-            <td class="border px-4 py-2">Adam</td>
-            <td class="border px-4 py-2">858</td>
-            <td class="border px-4 py-2">2022/08/10</td>
-          </tr>
-          <tr class="bg-gray-200">
-            <td class="border px-4 py-2">
-              A Long and Winding Tour of the History of UI Frameworks and Tools
-              and the Impact on Design
-            </td>
-            <td class="border px-4 py-2">Adam</td>
-            <td class="border px-4 py-2">112</td>
-            <td class="border px-4 py-2">2022/08/10</td>
-          </tr>
-          <tr>
-            <td class="border px-4 py-2">Intro to JavaScript</td>
-            <td class="border px-4 py-2">Chris</td>
-            <td class="border px-4 py-2">1,280</td>
-            <td class="border px-4 py-2">2022/08/10</td>
+          <tr v-for="article in articles">
+            <td class="border px-4 py-2">{{ article.Title }}</td>
+            <td class="border px-4 py-2">Go</td>
+            <td class="border px-4 py-2">{{ article.UserName }}</td>
+            <td class="border px-4 py-2">{{ article.UpdatedAt }}</td>
           </tr>
         </tbody>
       </table>

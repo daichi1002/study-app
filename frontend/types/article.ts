@@ -1,8 +1,8 @@
 export type Article = {
-  ArticleId: string;
-  UserName: string;
-  Title: string;
-  Content: string;
-  Tag: string;
-  UpdatedAt: string;
+  articleId: string;
+  userName: string;
+  title: string;
+  content: string;
+  tag: string;
+  updatedDate: string;
 };

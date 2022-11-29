@@ -22,6 +22,11 @@ func NewArticleUsecase(repo repository.ArticleRepository) *ArticleUsecase {
 func (u *ArticleUsecase) GetArticles(c *gin.Context) {
 	articles, err := u.articleRepository.ListArticles()
 
+	// 更新日をセット
+	for _, article := range articles {
+		article.SetUpdatedDate()
+	}
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return

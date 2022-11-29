@@ -1,14 +1,20 @@
 package model
 
-import "time"
+import (
+	"backend/constant"
+	"time"
+)
 
 type Article struct {
-	ArticleId string
-	UserId    string
-	Title     string
-	Content   string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ArticleId   string `json:"articleId"`
+	UserName    string `json:"userName"`
+	Title       string `json:"title"`
+	Content     string `json:"content"`
+	Tag         string `json:"tag"`
+	UpdatedAt   time.Time
+	UpdatedDate string `json:"updatedDate"`
 }
 
-type Articles []Article
+func (a *Article) SetUpdatedDate() {
+	a.UpdatedDate = a.UpdatedAt.Format(constant.YYYY_MM_DD)
+}

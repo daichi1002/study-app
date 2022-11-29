@@ -31,10 +31,10 @@ const { data: articles } = await useFetch<Article[]>(
         </thead>
         <tbody>
           <tr v-for="article in articles">
-            <td class="border px-4 py-2">{{ article.Title }}</td>
-            <td class="border px-4 py-2">Go</td>
-            <td class="border px-4 py-2">{{ article.UserName }}</td>
-            <td class="border px-4 py-2">{{ article.UpdatedAt }}</td>
+            <td class="border px-4 py-2">{{ article.title }}</td>
+            <td class="border px-4 py-2">{{ article.tag }}</td>
+            <td class="border px-4 py-2">{{ article.userName }}</td>
+            <td class="border px-4 py-2">{{ article.updatedDate }}</td>
           </tr>
         </tbody>
       </table>

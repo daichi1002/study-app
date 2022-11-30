@@ -10,6 +10,10 @@ export type Article = {
 export type RequestArticle = {
   title: string;
   content: string;
-  tagId: number[];
+  tags: ArticleTag[];
   userId: string;
+};
+
+type ArticleTag = {
+  tagId: number;
 };

@@ -5,6 +5,6 @@ import (
 )
 
 type ArticleRepository interface {
-	ListArticles() ([]*model.Article, error)
+	ListArticles() ([]*model.ResponseArticle, error)
 	CreateArticle(*model.Article) error
 }

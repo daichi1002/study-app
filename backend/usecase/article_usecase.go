@@ -3,6 +3,7 @@ package usecase
 import (
 	"backend/domain/model"
 	"backend/domain/repository"
+	"backend/util"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -37,6 +38,7 @@ func (u *ArticleUsecase) GetArticles(c *gin.Context) {
 
 func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
 	input := &model.Article{}
+	input.ArticleId = util.GetUlid()
 	err := c.ShouldBindWith(input, binding.JSON)
 
 	if err != nil {

@@ -2,7 +2,7 @@ package article
 
 import "backend/domain/model"
 
-func (r *articleRepository) ListArticles() (articles []*model.Article, err error) {
+func (r *articleRepository) ListArticles() (articles []*model.ResponseArticle, err error) {
 	err = r.DB.Table("articles as a").
 		Select(`
 			a.article_id,

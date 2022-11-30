@@ -9,7 +9,7 @@ const { data: tags } = await useFetch<Tag[]>(`http://localhost:8080/create`);
     <div class="mt-10">
       <div>タイトル</div>
       <input
-        class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-2/4 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+        class="appearance-none border-2 border-gray-300 rounded w-2/4 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
         id="inline-full-name"
         type="text"
         value=""
@@ -33,12 +33,13 @@ const { data: tags } = await useFetch<Tag[]>(`http://localhost:8080/create`);
     </div>
     <div class="mt-10">
       <div>本文</div>
-      <textarea
+      <!-- <textarea
         class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-72 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
         id="inline-full-name"
         type="text"
         value=""
-      />
+      /> -->
+      <Markdown />
     </div>
     <div class="mt-6 grid grid-cols-9 gap-9">
       <button class="bg-teal-300 hover:bg-teal-500 py-2 px-4 rounded-lg">

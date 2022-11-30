@@ -6,3 +6,10 @@ export type Article = {
   tag: string;
   updatedDate: string;
 };
+
+export type RequestArticle = {
+  title: string;
+  content: string;
+  tagId: number[];
+  userId: string;
+};

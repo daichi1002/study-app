@@ -13,9 +13,9 @@ func (r *articleRepository) ListArticles() (articles []*model.ResponseArticle, e
 			u.name as user_name,
 			GROUP_CONCAT(t.name separator ' / ') as tag
 		`).
-		Joins("left outer join users as u on u.user_id = a.user_id").
-		Joins("left outer join article_tags as at on at.article_id = a.article_id").
-		Joins("left outer join tags as t on t.id = at.id").
+		Joins("INNER JOIN users as u ON u.user_id = a.user_id").
+		Joins("INNER JOIN article_tags as at ON at.article_id = a.article_id").
+		Joins("INNER JOIN tags as t ON t.id = at.id").
 		Group("a.article_id").
 		Find(&articles).Error
 

@@ -31,7 +31,11 @@ const { data: articles } = await useFetch<Article[]>(
         </thead>
         <tbody>
           <tr v-for="article in articles">
-            <td class="border px-4 py-2">{{ article.title }}</td>
+            <td class="border px-4 py-2">
+              <NuxtLink :to="`/article/${article.articleId}`">{{
+                article.title
+              }}</NuxtLink>
+            </td>
             <td class="border px-4 py-2">{{ article.tag }}</td>
             <td class="border px-4 py-2">{{ article.userName }}</td>
             <td class="border px-4 py-2">{{ article.updatedDate }}</td>

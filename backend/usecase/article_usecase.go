@@ -60,3 +60,17 @@ func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
 
 	c.JSON(http.StatusOK, nil)
 }
+
+func (u *ArticleUsecase) GetArticle(c *gin.Context) {
+	id := c.Params.ByName("id")
+	article, err := u.articleRepository.ShowArticle(id)
+	// 更新日をセット
+	article.SetUpdatedDate()
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, article)
+}

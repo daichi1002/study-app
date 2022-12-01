@@ -6,7 +6,9 @@
       /></NuxtLink>
       <nav>
         <ul class="flex align-center">
-          <li class="text-lg px-6"><NuxtLink to="/list">記録</NuxtLink></li>
+          <li class="text-lg px-6">
+            <NuxtLink to="/article/list">記録</NuxtLink>
+          </li>
           <li class="text-lg px-6"><NuxtLink to="">チーム分け</NuxtLink></li>
           <li class="text-lg px-6"><NuxtLink to="">ユーザー</NuxtLink></li>
         </ul>

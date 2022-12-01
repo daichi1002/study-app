@@ -3,7 +3,7 @@ import { Tag } from "~/types/tag";
 import { RequestArticle } from "~/types/article";
 
 const { data: tags, error } = await useFetch<Tag[]>(
-  `http://localhost:8080/create`
+  `http://localhost:8080/article/create`
 );
 
 if (!tags.value || error.value) {
@@ -21,7 +21,7 @@ const reqArticle = reactive<RequestArticle>({
 
 const saveArticle = async () => {
   const { data, error } = await useFetch<RequestArticle>(
-    "http://localhost:8080/create",
+    "http://localhost:8080/article/create",
     {
       method: "POST",
       body: reqArticle,

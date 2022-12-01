@@ -12,7 +12,7 @@ func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	tagUsecase := usecase.NewTagUsecase(repos.TagRepository)
 
 	// エンドポイント
-	router.GET("/list", func(c *gin.Context) { articleUsecase.GetArticles(c) })
-	router.GET("/create", func(c *gin.Context) { tagUsecase.GetTags(c) })
-	router.POST("/create", func(c *gin.Context) { articleUsecase.CreateArticle(c) })
+	router.GET("/article/list", func(c *gin.Context) { articleUsecase.GetArticles(c) })
+	router.GET("/article/create", func(c *gin.Context) { tagUsecase.GetTags(c) })
+	router.POST("/article/create", func(c *gin.Context) { articleUsecase.CreateArticle(c) })
 }

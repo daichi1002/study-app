@@ -39,22 +39,19 @@ func (u *ArticleUsecase) GetArticles(c *gin.Context) {
 func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
 	request := &model.RequestArticle{}
 	article := &model.Article{}
-	articleTag := &model.ArticleTag{}
 
 	request.ArticleId = util.GetUlid()
 	err := c.ShouldBindWith(request, binding.JSON)
 
 	// article構造体にセット
 	article.SetArticle(request)
-	// articleTag構造体にセット
-	tags := articleTag.SetArticleTag(request)
 
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return
 	}
 
-	insertErr := u.articleRepository.CreateArticle(article, tags)
+	insertErr := u.articleRepository.CreateArticle(article)
 
 	if insertErr != nil {
 		c.JSON(http.StatusInternalServerError, insertErr.Error())

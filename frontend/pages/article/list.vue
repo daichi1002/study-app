@@ -3,7 +3,7 @@ import { Article } from "~/types/article";
 
 // const config = await useRuntimeConfig();
 const { data: articles } = await useFetch<Article[]>(
-  `http://localhost:8080/list`
+  `http://localhost:8080/article/list`
 );
 </script>
 <template>
@@ -16,7 +16,7 @@ const { data: articles } = await useFetch<Article[]>(
         value=""
       />
       <button>
-        <img src="../assets/images/search.png" />
+        <img src="../../assets/images/search.png" />
       </button>
     </div>
     <div class="flex justify-center mt-10">
@@ -39,7 +39,7 @@ const { data: articles } = await useFetch<Article[]>(
         </tbody>
       </table>
     </div>
-    <NuxtLink to="/create">
+    <NuxtLink to="/article/create">
       <button
         class="fixed bottom-8 right-8 rounded-full w-24 py-6 bg-teal-300 hover:bg-teal-500 text-white text-center font-semibold text-5xl"
       >

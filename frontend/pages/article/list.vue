@@ -30,7 +30,7 @@ const { data: articles } = await useFetch<Article[]>(
           </tr>
         </thead>
         <tbody>
-          <tr v-for="article in articles">
+          <tr v-for="article in articles" class="hover:bg-slate-100">
             <td class="border px-4 py-2">
               <NuxtLink :to="`/article/${article.articleId}`">{{
                 article.title

@@ -6,12 +6,13 @@ import (
 )
 
 type Article struct {
-	ArticleId string
-	UserId    string
-	Title     string
-	Content   string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ArticleId   string
+	UserId      string
+	Title       string
+	Content     string
+	ArticleTags []*ArticleTag `gorm:"foreignKey:ArticleId;references:ArticleId"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 type ResponseArticle struct {
@@ -25,13 +26,25 @@ type ResponseArticle struct {
 }
 
 type RequestArticle struct {
-	ArticleId string
-	Title     string       `json:"title"`
-	Content   string       `json:"content"`
-	Tags      []ArticleTag `json:"tags"`
-	UserId    string       `json:"userId"`
+	ArticleId   string
+	UserId      string `json:"userId"`
+	Title       string `json:"title"`
+	Content     string `json:"content"`
+	ArticleTags []int  `json:"tags"`
 }
 
 func (a *ResponseArticle) SetUpdatedDate() {
 	a.UpdatedDate = a.UpdatedAt.Format(constant.YYYY_MM_DD)
+}
+
+func (a *Article) SetArticle(request *RequestArticle) {
+	a.ArticleId = request.ArticleId
+	a.UserId = request.UserId
+	a.Title = request.Title
+	a.Content = request.Content
+
+	for _, tag := range request.ArticleTags {
+		newTag := &ArticleTag{TagId: tag}
+		a.ArticleTags = append(a.ArticleTags, newTag)
+	}
 }

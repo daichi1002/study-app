@@ -28,7 +28,12 @@ const saveArticle = async () => {
     }
   );
 
-  console.log(reqArticle);
+  if (error.value) {
+    throw createError({
+      statusCode: 404,
+      message: "failed to create",
+    });
+  }
 };
 </script>
 
@@ -62,12 +67,6 @@ const saveArticle = async () => {
     </div>
     <div class="mt-4">
       <div>本文</div>
-      <!-- <textarea
-        class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-72 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-        id="inline-full-name"
-        type="text"
-        value=""
-      /> -->
       <Markdown v-model="reqArticle.content" />
     </div>
     <div class="mt-4 grid grid-cols-9 gap-9">

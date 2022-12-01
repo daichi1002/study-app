@@ -6,5 +6,5 @@ import (
 
 type ArticleRepository interface {
 	ListArticles() ([]*model.ResponseArticle, error)
-	CreateArticle(*model.Article) error
+	CreateArticle(article *model.Article, tags []*model.ArticleTag) error
 }

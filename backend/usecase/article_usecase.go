@@ -65,6 +65,7 @@ func (u *ArticleUsecase) GetArticle(c *gin.Context) {
 	id := c.Params.ByName("id")
 	article, err := u.articleRepository.ShowArticle(id)
 	// 更新日をセット
+	// フロント側でやってもらう
 	article.SetUpdatedDate()
 
 	if err != nil {

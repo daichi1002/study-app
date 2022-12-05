@@ -6,15 +6,18 @@ import (
 )
 
 type Article struct {
-	ArticleId   string
-	UserId      string
-	Title       string
-	Content     string
+	ArticleId string
+	// ユーザーは別で取ってくるから不要になる
+	UserId  string
+	Title   string
+	Content string
+	// tagsをもつ
 	ArticleTags []*ArticleTag `gorm:"foreignKey:ArticleId;references:ArticleId"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
 
+// 消す
 type ResponseArticle struct {
 	ArticleId   string `json:"articleId"`
 	UserName    string `json:"userName"`
@@ -25,6 +28,7 @@ type ResponseArticle struct {
 	UpdatedDate string `json:"updatedDate"`
 }
 
+// 消す
 type RequestArticle struct {
 	ArticleId   string
 	UserId      string `json:"userId"`

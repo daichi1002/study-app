@@ -23,11 +23,6 @@ func NewArticleUsecase(repo repository.ArticleRepository) *ArticleUsecase {
 func (u *ArticleUsecase) GetArticles(c *gin.Context) {
 	articles, err := u.articleRepository.ListArticles()
 
-	// 更新日をセット
-	for _, article := range articles {
-		article.SetUpdatedDate()
-	}
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -37,15 +32,11 @@ func (u *ArticleUsecase) GetArticles(c *gin.Context) {
 }
 
 func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
-	request := &model.RequestArticle{}
 	article := &model.Article{}
 
-	request.ArticleId = util.GetUlid()
-	err := c.ShouldBindWith(request, binding.JSON)
+	err := c.ShouldBindWith(article, binding.JSON)
 
-	// article構造体にセット
-	article.SetArticle(request)
-
+	article.Id = util.GetUlid()
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return
@@ -64,9 +55,6 @@ func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
 func (u *ArticleUsecase) GetArticle(c *gin.Context) {
 	id := c.Params.ByName("id")
 	article, err := u.articleRepository.ShowArticle(id)
-	// 更新日をセット
-	// フロント側でやってもらう
-	article.SetUpdatedDate()
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())

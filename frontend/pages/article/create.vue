@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Tag } from "~/types/tag";
-import { RequestArticle } from "~/types/article";
+import { Article } from "~/types/article";
 
 const { data: tags, error } = await useFetch<Tag[]>(
   `http://localhost:8080/article/create`
@@ -12,15 +12,16 @@ if (!tags.value || error.value) {
     message: "Tags not found",
   });
 }
-const reqArticle = reactive<RequestArticle>({
+const reqArticle = reactive<Article>({
+  articleId: null,
   title: "",
   content: "",
   tags: [],
-  userId: "01GJXX23KX4GC9YMA5DXS837FP", // user管理機能未作成なので仮の値を設定
+  updatedAt: null,
 });
 
 const saveArticle = async () => {
-  const { data, error } = await useFetch<RequestArticle>(
+  const { data, error } = await useFetch<Article>(
     "http://localhost:8080/article/create",
     {
       method: "POST",
@@ -55,12 +56,12 @@ const saveArticle = async () => {
           <input
             id="default-checkbox"
             type="checkbox"
-            :value="tag.id"
+            :value="tag"
             v-model="reqArticle.tags"
             class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           />
           <label for="default-checkbox" class="ml-2 text-sm font-medium">{{
-            tag.name
+            tag.tagName
           }}</label>
         </div>
       </div>

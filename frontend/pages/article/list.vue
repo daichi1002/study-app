@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import { Article } from "~/types/article";
+import { Article, ArticleTag } from "~/types/article";
 
 // const config = await useRuntimeConfig();
 const { data: articles } = await useFetch<Article[]>(
   `http://localhost:8080/article/list`
 );
+
+const setTagName = (tags: ArticleTag[]) => {
+  let name = "";
+  const len = tags.length;
+  tags.forEach((tag, i) => {
+    if (len == i + 1) {
+      name += `${tag.tagName}`;
+      return;
+    }
+    name += `${tag.tagName} / `;
+  });
+  return name;
+};
 </script>
 <template>
   <div class="container mx-auto">
@@ -36,9 +49,12 @@ const { data: articles } = await useFetch<Article[]>(
                 article.title
               }}</NuxtLink>
             </td>
-            <td class="border px-4 py-2">{{ article.tag }}</td>
-            <td class="border px-4 py-2">{{ article.userName }}</td>
-            <td class="border px-4 py-2">{{ article.updatedDate }}</td>
+            <td class="border px-4 py-2">{{ setTagName(article.tags) }}</td>
+            <!--  ユーザー機能ができ次第表示（現在は仮の値） -->
+            <td class="border px-4 py-2">{{ "テストユーザー" }}</td>
+            <td class="border px-4 py-2">
+              {{ article.updatedAt }}
+            </td>
           </tr>
         </tbody>
       </table>

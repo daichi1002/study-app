@@ -1,19 +1,12 @@
 export type Article = {
-  articleId: string;
-  userName: string;
-  title: string;
-  content: string;
-  tag: string;
-  updatedDate: string;
-};
-
-export type RequestArticle = {
+  articleId: string | null;
   title: string;
   content: string;
   tags: ArticleTag[];
-  userId: string;
+  updatedAt: Date | null;
 };
 
-type ArticleTag = {
+export type ArticleTag = {
   tagId: number;
+  tagName: string;
 };

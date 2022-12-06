@@ -30,7 +30,6 @@ const deleteArticle = async () => {
     `http://localhost:8080/article/delete/${id}`,
     {
       method: "DELETE",
-      body: article,
     }
   );
 

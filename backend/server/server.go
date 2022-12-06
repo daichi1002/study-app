@@ -17,4 +17,5 @@ func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	router.POST("/article/create", func(c *gin.Context) { articleUsecase.CreateArticle(c) })
 	router.GET("/article/:id", func(c *gin.Context) { articleUsecase.GetArticle(c) })
 	router.PUT("/article/edit/:id", func(c *gin.Context) { articleUsecase.UpdateArticle(c) })
+	router.DELETE("/article/delete/:id", func(c *gin.Context) { articleUsecase.DeleteArticle(c) })
 }

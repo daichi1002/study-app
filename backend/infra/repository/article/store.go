@@ -30,3 +30,19 @@ func (r *articleRepository) UpdateArticle(article *model.Article) error {
 
 	return nil
 }
+
+func (r *articleRepository) DeleteArticle(id string) (err error) {
+	err = r.DB.Debug().Where("article_id = ?", id).Delete(&model.ArticleTag{}).Error
+
+	if err != nil {
+		return err
+	}
+
+	err = r.DB.Debug().Where("id = ?", id).Delete(&model.Article{}).Error
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

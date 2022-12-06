@@ -82,3 +82,15 @@ func (u *ArticleUsecase) UpdateArticle(c *gin.Context) {
 
 	c.JSON(http.StatusOK, nil)
 }
+
+func (u *ArticleUsecase) DeleteArticle(c *gin.Context) {
+	id := c.Params.ByName("id")
+	err := u.articleRepository.DeleteArticle(id)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
+}

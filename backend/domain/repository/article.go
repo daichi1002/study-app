@@ -9,4 +9,5 @@ type ArticleRepository interface {
 	CreateArticle(*model.Article) error
 	ShowArticle(string) (*model.Article, error)
 	UpdateArticle(*model.Article) error
+	DeleteArticle(string) error
 }

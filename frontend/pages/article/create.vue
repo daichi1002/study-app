@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { Article } from "~/types/article";
 
-const tags = useTag();
-
 const reqArticle = reactive<Article>({
   articleId: null,
   title: "",
@@ -31,7 +29,7 @@ const saveArticle = async () => {
 
 <template>
   <div class="container mx-auto">
-    <Form :value="reqArticle" :tags="tags" />
+    <Form :value="reqArticle" />
     <div class="mt-4 grid grid-cols-9 gap-9">
       <button
         class="bg-teal-300 hover:bg-teal-500 py-2 px-4 rounded-lg"

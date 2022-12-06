@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Article } from "~/types/article";
 
-const tags = useTag();
 const router = useRoute();
 const { id } = router.params;
 
@@ -9,12 +8,12 @@ const { data: article } = await useFetch<Article>(
   `http://localhost:8080/article/${id}`
 );
 
-const saveArticle = async () => {
-  const { data, error } = await useFetch<Article>(
+const updateArticle = async () => {
+  const { error } = await useFetch<Article>(
     `http://localhost:8080/article/edit/${id}`,
     {
       method: "PUT",
-      body: tags,
+      body: article,
     }
   );
 
@@ -29,11 +28,11 @@ const saveArticle = async () => {
 
 <template>
   <div class="container mx-auto" v-if="article">
-    <Form :value="article" :tags="tags" />
+    <Form :value="article" />
     <div class="mt-4 grid grid-cols-9 gap-9">
       <button
         class="bg-teal-300 hover:bg-teal-500 py-2 px-4 rounded-lg"
-        @click="saveArticle()"
+        @click="updateArticle()"
       >
         編集
       </button>

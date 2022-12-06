@@ -4,7 +4,17 @@ import { Article } from "~/types/article";
 
 interface Props {
   value: Article;
-  tags: Tag[] | null;
+}
+
+const { data: tags, error } = await useFetch<Tag[]>(
+  `http://localhost:8080/tags`
+);
+
+if (!tags.value || error.value) {
+  throw createError({
+    statusCode: 404,
+    message: "Tags not found",
+  });
 }
 
 const props = defineProps<Props>();
@@ -23,7 +33,7 @@ const props = defineProps<Props>();
   <div class="mt-4">
     <div>タグ</div>
     <div class="grid grid-cols-5 gap-5">
-      <div v-for="tag in props.tags">
+      <div v-for="tag in tags">
         <input
           id="default-checkbox"
           type="checkbox"

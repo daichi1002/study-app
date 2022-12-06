@@ -63,3 +63,22 @@ func (u *ArticleUsecase) GetArticle(c *gin.Context) {
 
 	c.JSON(http.StatusOK, article)
 }
+
+func (u *ArticleUsecase) UpdateArticle(c *gin.Context) {
+	article := &model.Article{}
+	err := c.ShouldBindWith(article, binding.JSON)
+
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	insertErr := u.articleRepository.UpdateArticle(article)
+
+	if insertErr != nil {
+		c.JSON(http.StatusInternalServerError, insertErr.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
+}

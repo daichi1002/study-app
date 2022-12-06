@@ -16,4 +16,5 @@ func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	router.GET("/tags", func(c *gin.Context) { tagUsecase.GetTags(c) })
 	router.POST("/article/create", func(c *gin.Context) { articleUsecase.CreateArticle(c) })
 	router.GET("/article/:id", func(c *gin.Context) { articleUsecase.GetArticle(c) })
+	router.PUT("/article/edit/:id", func(c *gin.Context) { articleUsecase.UpdateArticle(c) })
 }

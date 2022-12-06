@@ -24,6 +24,23 @@ const updateArticle = async () => {
     });
   }
 };
+
+const deleteArticle = async () => {
+  const { error } = await useFetch<Article>(
+    `http://localhost:8080/article/delete/${id}`,
+    {
+      method: "DELETE",
+      body: article,
+    }
+  );
+
+  if (error.value) {
+    throw createError({
+      statusCode: 404,
+      message: "failed to delete",
+    });
+  }
+};
 </script>
 
 <template>
@@ -36,7 +53,10 @@ const updateArticle = async () => {
       >
         編集
       </button>
-      <button class="bg-red-400 hover:bg-red-500 py-2 px-4 rounded-lg">
+      <button
+        class="bg-red-400 hover:bg-red-500 py-2 px-4 rounded-lg"
+        @click="deleteArticle()"
+      >
         削除
       </button>
     </div>

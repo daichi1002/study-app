@@ -1,17 +1,8 @@
 <script setup lang="ts">
-import { Tag } from "~/types/tag";
 import { Article } from "~/types/article";
 
-const { data: tags, error } = await useFetch<Tag[]>(
-  `http://localhost:8080/article/create`
-);
+const tags = useTag();
 
-if (!tags.value || error.value) {
-  throw createError({
-    statusCode: 404,
-    message: "Tags not found",
-  });
-}
 const reqArticle = reactive<Article>({
   articleId: null,
   title: "",

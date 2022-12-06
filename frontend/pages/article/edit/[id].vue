@@ -1,24 +1,13 @@
 <script setup lang="ts">
-import { Tag } from "~/types/tag";
 import { Article } from "~/types/article";
 
+const tags = useTag();
 const router = useRoute();
 const { id } = router.params;
 
 const { data: article } = await useFetch<Article>(
   `http://localhost:8080/article/${id}`
 );
-
-const { data: tags, error } = await useFetch<Tag[]>(
-  `http://localhost:8080/article/create`
-);
-
-if (!tags.value || error.value) {
-  throw createError({
-    statusCode: 404,
-    message: "Tags not found",
-  });
-}
 
 const saveArticle = async () => {
   const { data, error } = await useFetch<Article>(

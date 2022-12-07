@@ -24,7 +24,7 @@ const setTagName = (tags: ArticleTag[]) => {
 <template>
   <div class="flex text-2xl mt-4">
     <h1 class="mr-10">{{ "テストユーザー" }}</h1>
-    <h1>{{ props.value.updatedAt }}</h1>
+    <h1>{{ formatDate(props.value.updatedAt) }}</h1>
   </div>
   <div class="flex text-2xl mt-6">
     <h1 class="mr-10">{{ setTagName(props.value.tags) }}</h1>

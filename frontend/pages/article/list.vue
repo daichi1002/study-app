@@ -53,7 +53,7 @@ const setTagName = (tags: ArticleTag[]) => {
             <!--  ユーザー機能ができ次第表示（現在は仮の値） -->
             <td class="border px-4 py-2">{{ "テストユーザー" }}</td>
             <td class="border px-4 py-2">
-              {{ article.updatedAt }}
+              {{ formatDate(article.updatedAt) }}
             </td>
           </tr>
         </tbody>

@@ -10,20 +10,22 @@ const reqArticle = reactive<Article>({
 });
 
 const saveArticle = async () => {
-  const { data, error } = await useFetch<Article>(
+  const { error } = await useFetch<Article>(
     "http://localhost:8080/article/create",
     {
       method: "POST",
       body: reqArticle,
     }
   );
-
+  console.log(error.value);
   if (error.value) {
     throw createError({
       statusCode: 404,
       message: "failed to create",
     });
   }
+
+  changePage("/article/list");
 };
 </script>
 

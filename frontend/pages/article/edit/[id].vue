@@ -23,6 +23,8 @@ const updateArticle = async () => {
       message: "failed to create",
     });
   }
+
+  changePage(`/article/${id}`);
 };
 
 const deleteArticle = async () => {
@@ -39,6 +41,8 @@ const deleteArticle = async () => {
       message: "failed to delete",
     });
   }
+
+  changePage("/article/list");
 };
 </script>
 

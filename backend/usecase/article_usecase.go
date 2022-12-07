@@ -4,6 +4,7 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"backend/util"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -35,7 +36,7 @@ func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
 	article := &model.Article{}
 
 	err := c.ShouldBindWith(article, binding.JSON)
-
+	fmt.Println(err)
 	article.Id = util.GetUlid()
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())

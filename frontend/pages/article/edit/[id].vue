@@ -5,9 +5,7 @@ import { changePage } from "~/util/router";
 const router = useRoute();
 const { id } = router.params;
 
-const { data } = await useFetch<Article>(`http://localhost:8080/article/${id}`);
-
-const { article, setTitle, setTags, setContent } = useArticle();
+const { article } = useArticle();
 
 const updateArticle = async () => {
   const { error } = await useFetch<Article>(

@@ -4,7 +4,6 @@ import { Article, ArticleTag } from "~/types/article";
 export const setTitle = (article: Ref<Article>) => {
   return (title: string) => {
     article.value.title = title;
-    console.log(title);
   };
 };
 
@@ -17,7 +16,12 @@ export const setTags = (article: Ref<Article>) => {
 export const setContent = (article: Ref<Article>) => {
   return (content: string) => {
     article.value.content = content;
-    console.log(content);
+  };
+};
+
+export const setArticle = (article: Ref<Article>) => {
+  return (resArticle: Article) => {
+    article.value = resArticle;
   };
 };
 
@@ -36,5 +40,6 @@ export const useArticle = () => {
     setTitle: setTitle(article),
     setTags: setTags(article),
     setContent: setContent(article),
+    setArticle: setArticle(article),
   };
 };

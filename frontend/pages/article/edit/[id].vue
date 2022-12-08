@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Article } from "~/types/article";
+import { changePage } from "~/util/router";
 
 const router = useRoute();
 const { id } = router.params;

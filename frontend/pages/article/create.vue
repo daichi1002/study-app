@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Article } from "~/types/article";
+import { changePage } from "~/util/router";
 
 const reqArticle = reactive<Article>({
   articleId: null,

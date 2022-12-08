@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Article, ArticleTag } from "~/types/article";
+import { formatDate } from "~/util/date";
 
 // const config = await useRuntimeConfig();
 const { data: articles } = await useFetch<Article[]>(

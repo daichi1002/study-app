@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Article, ArticleTag } from "~/types/article";
 import MdEditor from "md-editor-v3";
+import { formatDate } from "~/util/date";
 
 interface Props {
   value: Article;

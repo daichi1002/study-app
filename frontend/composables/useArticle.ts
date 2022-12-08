@@ -2,7 +2,10 @@ import type { Ref } from "vue";
 import { Article, ArticleTag } from "~/types/article";
 
 export const setTitle = (article: Ref<Article>) => {
-  return (title: string) => {
+  return (title: string | undefined) => {
+    if (title == undefined) {
+      return;
+    }
     article.value.title = title;
   };
 };
@@ -14,7 +17,10 @@ export const setTags = (article: Ref<Article>) => {
 };
 
 export const setContent = (article: Ref<Article>) => {
-  return (content: string) => {
+  return (content: string | undefined) => {
+    if (content == undefined) {
+      return;
+    }
     article.value.content = content;
   };
 };

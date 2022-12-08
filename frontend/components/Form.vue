@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Tag } from "~/types/tag";
+import { useField } from "vee-validate";
+import * as yup from "yup";
 
 const { data: tags, error } = await useFetch<Tag[]>(
   `http://localhost:8080/tags`
@@ -15,11 +17,26 @@ if (!tags.value || error.value) {
 const { article, setTitle, setTags, setContent } = useArticle();
 const title = ref(article.value.title);
 const content = ref(article.value.content);
+
+// const { errorMessage: titleError, value: inputTitle } = useField(
+//   ref(article.value.title),
+//   yup
+//     .string()
+//     .required("入力必須項目です")
+//     .max(30, "30文字以内で入力してください")
+// );
+// const { errorMessage: contentError, value: inputContent } = useField(
+//   ref(article.value.content),
+//   yup.string().required("入力必須項目です")
+// );
 </script>
 
 <template>
   <div class="mt-5">
-    <div>タイトル</div>
+    <div class="flex">
+      <div class="mr-8">タイトル</div>
+      <!-- <div class="text-red-500">{{ titleError }}</div> -->
+    </div>
     <input
       class="appearance-none border-2 border-gray-300 rounded w-2/4 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
       id="inline-full-name"
@@ -46,7 +63,10 @@ const content = ref(article.value.content);
     </div>
   </div>
   <div class="mt-4">
-    <div>本文</div>
+    <div class="flex">
+      <div class="mr-8">本文</div>
+      <!-- <div class="text-red-500">{{ contentError }}</div> -->
+    </div>
     <Markdown v-model="content" @onChange="setContent(content)" />
   </div>
 </template>

@@ -4,12 +4,13 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"backend/util"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
+
+var logger = util.NewLogger()
 
 type ArticleUsecase struct {
 	articleRepository repository.ArticleRepository
@@ -25,6 +26,7 @@ func (u *ArticleUsecase) GetArticles(c *gin.Context) {
 	articles, err := u.articleRepository.ListArticles()
 
 	if err != nil {
+		logger.Error(err)
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -36,9 +38,10 @@ func (u *ArticleUsecase) CreateArticle(c *gin.Context) {
 	article := &model.Article{}
 
 	err := c.ShouldBindWith(article, binding.JSON)
-	fmt.Println(err)
+
 	article.Id = util.GetUlid()
 	if err != nil {
+		logger.Error(err)
 		c.String(http.StatusBadRequest, err.Error())
 		return
 	}
@@ -58,6 +61,7 @@ func (u *ArticleUsecase) GetArticle(c *gin.Context) {
 	article, err := u.articleRepository.ShowArticle(id)
 
 	if err != nil {
+		logger.Error(err)
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -70,6 +74,7 @@ func (u *ArticleUsecase) UpdateArticle(c *gin.Context) {
 	err := c.ShouldBindWith(article, binding.JSON)
 
 	if err != nil {
+		logger.Error(err)
 		c.String(http.StatusBadRequest, err.Error())
 		return
 	}
@@ -77,6 +82,7 @@ func (u *ArticleUsecase) UpdateArticle(c *gin.Context) {
 	insertErr := u.articleRepository.UpdateArticle(article)
 
 	if insertErr != nil {
+		logger.Error(insertErr)
 		c.JSON(http.StatusInternalServerError, insertErr.Error())
 		return
 	}
@@ -89,6 +95,7 @@ func (u *ArticleUsecase) DeleteArticle(c *gin.Context) {
 	err := u.articleRepository.DeleteArticle(id)
 
 	if err != nil {
+		logger.Error(err)
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}

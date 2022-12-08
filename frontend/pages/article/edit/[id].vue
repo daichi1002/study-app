@@ -5,9 +5,9 @@ import { changePage } from "~/util/router";
 const router = useRoute();
 const { id } = router.params;
 
-const { data: article } = await useFetch<Article>(
-  `http://localhost:8080/article/${id}`
-);
+const { data } = await useFetch<Article>(`http://localhost:8080/article/${id}`);
+
+const { article, setTitle, setTags, setContent } = useArticle();
 
 const updateArticle = async () => {
   const { error } = await useFetch<Article>(
@@ -49,7 +49,7 @@ const deleteArticle = async () => {
 
 <template>
   <div class="container mx-auto" v-if="article">
-    <Form :value="article" />
+    <Form />
     <div class="mt-4 grid grid-cols-9 gap-9">
       <button
         class="bg-teal-300 hover:bg-teal-500 py-2 px-4 rounded-lg"

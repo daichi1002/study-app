@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import { Tag } from "~/types/tag";
-import { Article } from "~/types/article";
-
-interface Props {
-  value: Article;
-}
 
 const { data: tags, error } = await useFetch<Tag[]>(
   `http://localhost:8080/tags`
@@ -17,7 +12,9 @@ if (!tags.value || error.value) {
   });
 }
 
-const props = defineProps<Props>();
+const { article, setTitle, setTags, setContent } = useArticle();
+const title = ref(article.value.title);
+const content = ref(article.value.content);
 </script>
 
 <template>
@@ -27,7 +24,8 @@ const props = defineProps<Props>();
       class="appearance-none border-2 border-gray-300 rounded w-2/4 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
       id="inline-full-name"
       type="text"
-      v-model="props.value.title"
+      v-model="title"
+      @blur="setTitle(title)"
     />
   </div>
   <div class="mt-4">
@@ -38,7 +36,7 @@ const props = defineProps<Props>();
           id="default-checkbox"
           type="checkbox"
           :value="tag"
-          v-model="props.value.tags"
+          @blur="setTags(tag)"
           class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         />
         <label for="default-checkbox" class="ml-2 text-sm font-medium">{{
@@ -49,6 +47,6 @@ const props = defineProps<Props>();
   </div>
   <div class="mt-4">
     <div>本文</div>
-    <Markdown v-model="props.value.content" />
+    <Markdown v-model="content" @onChange="setContent(content)" />
   </div>
 </template>

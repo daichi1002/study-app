@@ -21,7 +21,7 @@ setState();
 const updateArticle = async () => {
   // TODO:もっとリッチにしたい
   if (!article.value.title) return alert("タイトルを入力してください");
-  if (!article.value.title) return alert("本文を入力してください");
+  if (!article.value.content) return alert("本文を入力してください");
 
   const { error } = await useFetch<Article>(
     `http://localhost:8080/article/edit/${id}`,

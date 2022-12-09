@@ -1,7 +1,7 @@
 package model
 
 type ArticleTag struct {
-	ArticleId string `gorm:"primaryKey"`
+	ArticleId string `gorm:"primaryKey;type:varchar(26);size:26"`
 	TagId     int    `gorm:"type:int(11)"`
 }
 

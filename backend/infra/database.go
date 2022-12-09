@@ -48,7 +48,7 @@ func connectDB() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	migrateErr := db.AutoMigrate(&model.Article{}, &model.User{})
+	migrateErr := db.AutoMigrate(&model.User{}, &model.Article{})
 
 	if migrateErr != nil {
 		return nil, migrateErr

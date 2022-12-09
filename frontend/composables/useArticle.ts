@@ -31,6 +31,16 @@ export const setArticle = (article: Ref<Article>) => {
   };
 };
 
+export const resetArticle = (article: Ref<Article>) => () => {
+  article.value = reactive<Article>({
+    articleId: null,
+    title: "",
+    content: "",
+    tags: [],
+    updatedAt: null,
+  });
+};
+
 export const useArticle = () => {
   const article = useState("article", () =>
     reactive<Article>({
@@ -47,5 +57,6 @@ export const useArticle = () => {
     setTags: setTags(article),
     setContent: setContent(article),
     setArticle: setArticle(article),
+    resetArticle: resetArticle(article),
   };
 };

@@ -2,7 +2,8 @@
 import { Article } from "~/types/article";
 import { changePage } from "~/util/router";
 
-const { article } = useArticle();
+const { article, resetArticle } = useArticle();
+resetArticle();
 
 const saveArticle = async () => {
   // TODO:もっとリッチにしたい

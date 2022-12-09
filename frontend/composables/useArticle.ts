@@ -25,6 +25,15 @@ export const setContent = (article: Ref<Article>) => {
   };
 };
 
+export const setUserId = (article: Ref<Article>) => {
+  return (userId: string | undefined) => {
+    if (userId == undefined) {
+      return;
+    }
+    article.value.userId = userId;
+  };
+};
+
 export const setArticle = (article: Ref<Article>) => {
   return (resArticle: Article) => {
     article.value = resArticle;
@@ -37,6 +46,7 @@ export const resetArticle = (article: Ref<Article>) => () => {
     title: "",
     content: "",
     tags: [],
+    userId: "",
     updatedAt: null,
   });
 };
@@ -48,6 +58,7 @@ export const useArticle = () => {
       title: "",
       content: "",
       tags: [],
+      userId: "",
       updatedAt: null,
     })
   );
@@ -56,6 +67,7 @@ export const useArticle = () => {
     setTitle: setTitle(article),
     setTags: setTags(article),
     setContent: setContent(article),
+    setUserId: setUserId(article),
     setArticle: setArticle(article),
     resetArticle: resetArticle(article),
   };

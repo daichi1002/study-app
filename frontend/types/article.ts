@@ -3,6 +3,7 @@ export type Article = {
   title: string;
   content: string;
   tags: ArticleTag[];
+  userId: string;
   updatedAt: string | null;
 };
 

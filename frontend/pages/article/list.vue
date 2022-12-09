@@ -52,7 +52,7 @@ const setTagName = (tags: ArticleTag[]) => {
             </td>
             <td class="border px-4 py-2">{{ setTagName(article.tags) }}</td>
             <!--  ユーザー機能ができ次第表示（現在は仮の値） -->
-            <td class="border px-4 py-2">{{ "テストユーザー" }}</td>
+            <td class="border px-4 py-2">{{ article.userId }}</td>
             <td class="border px-4 py-2">
               {{ formatDate(article.updatedAt) }}
             </td>

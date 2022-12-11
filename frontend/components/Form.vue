@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Tag } from "~/types/tag";
+import { ArticleTag } from "~/types/article";
 import { useField } from "vee-validate";
 import * as yup from "yup";
 
@@ -17,7 +18,9 @@ if (!tags.value || error.value) {
 const { article, setTitle, setTags, setContent } = useArticle();
 const title = ref(article.value.title);
 const content = ref(article.value.content);
+const test: ArticleTag[] = [];
 
+const setStateTag = () => {};
 // const { errorMessage: titleError, value: inputTitle } = useField(
 //   ref(article.value.title),
 //   yup
@@ -53,6 +56,7 @@ const content = ref(article.value.content);
           id="default-checkbox"
           type="checkbox"
           :value="tag"
+          v-model="test"
           @blur="setTags(tag)"
           class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         />
@@ -61,6 +65,7 @@ const content = ref(article.value.content);
         }}</label>
       </div>
     </div>
+    {{ test }}
   </div>
   <div class="mt-4">
     <div class="flex">

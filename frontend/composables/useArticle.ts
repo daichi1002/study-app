@@ -20,11 +20,15 @@ export const useArticle = () => {
     article.value.title = title;
   };
 
-  const setTags = (tags: ArticleTag[]) => {
-    // タグが既存の配列になければ、追加・あれば削除のロジックを書く
-    article.value.tags = tags;
-    console.log(tags);
-    // console.log(article.value.tags);
+  const setTags = (t: ArticleTag) => {
+    // TODO リファクタ
+    if (article.value.tags.some((a) => a.tagId == t.tagId)) {
+      article.value.tags = article.value.tags.filter(
+        (item) => item.tagId !== t.tagId
+      );
+    } else {
+      article.value.tags.push(t);
+    }
   };
 
   const setContent = (content: string | undefined) => {

@@ -10,4 +10,5 @@ export type Article = {
 export type ArticleTag = {
   tagId: number;
   tagName: string;
+  isChecked: boolean;
 };

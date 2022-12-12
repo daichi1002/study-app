@@ -9,11 +9,21 @@ type Props = {
 };
 const { article } = defineProps<Props>();
 
-const { data: tags, error } = await useFetch<Tag[]>(
+const { data: mstTags, error } = await useFetch<ArticleTag[]>(
   `http://localhost:8080/tags`
 );
 
-if (!tags.value || error.value) {
+// TODO リファクタ
+mstTags.value?.map((tag) => {
+  article?.tags.map((a) => {
+    if (tag.tagId == a.tagId) {
+      tag.isChecked = true;
+      return;
+    }
+  });
+});
+
+if (!mstTags.value || error.value) {
   throw createError({
     statusCode: 404,
     message: "Tags not found",
@@ -29,7 +39,7 @@ const schema = yup.object({
   tags: yup.array().required("入力必須項目です"),
 });
 const { validate, resetForm } = useForm({ validationSchema: schema });
-// const test: ArticleTag[] = [];
+
 const { errorMessage: titleError, value: title } = useField<string>("title");
 const { errorMessage: contentError, value: content } =
   useField<string>("content");
@@ -61,13 +71,14 @@ if (article) {
   <div class="mt-4">
     <div>タグ</div>
     <div class="grid grid-cols-5 gap-5">
-      <div v-for="(tag, i) in tags" :key="i">
+      <div v-for="(tag, i) in mstTags" :key="i">
         <input
           :id="tag.tagName + i"
           type="checkbox"
-          :v-model="tag"
+          :value="tag"
+          :checked="tag.isChecked"
+          @change="setTags(tag)"
           class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          label="Title"
         />
         <label :for="tag.tagName + i" class="ml-2 text-sm font-medium">{{
           tag.tagName

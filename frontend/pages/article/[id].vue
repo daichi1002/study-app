@@ -6,14 +6,7 @@ const { id } = router.params;
 const { data } = await useFetch<Article>(`http://localhost:8080/article/${id}`);
 const { setArticle } = useArticle();
 
-const setState = () => {
-  if (data.value == null) {
-    return;
-  }
-
-  setArticle(data.value);
-};
-setState();
+setArticle(data.value);
 </script>
 
 <template>

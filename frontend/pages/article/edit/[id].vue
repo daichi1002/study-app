@@ -7,16 +7,7 @@ const { id } = router.params;
 
 const { data } = await useFetch<Article>(`http://localhost:8080/article/${id}`);
 const { article, setArticle } = useArticle();
-
-const setState = () => {
-  if (data.value == null) {
-    return;
-  }
-
-  setArticle(data.value);
-};
-
-setState();
+const props = setArticle(data.value);
 
 const updateArticle = async () => {
   // TODO:もっとリッチにしたい
@@ -61,8 +52,8 @@ const deleteArticle = async () => {
 </script>
 
 <template>
-  <div class="container mx-auto" v-if="article">
-    <Form />
+  <div class="container mx-auto">
+    <Form :article="props" />
     <div class="mt-4 grid grid-cols-9 gap-9">
       <button
         class="bg-teal-300 hover:bg-teal-500 py-2 px-4 rounded-lg"

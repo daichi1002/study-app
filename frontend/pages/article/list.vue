@@ -8,9 +8,6 @@ const { data: articles } = await useFetch<Article[]>(
 );
 
 const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
-
-const { setUsers } = useUser();
-setUsers(unref(users));
 </script>
 <template>
   <div class="container mx-auto">
@@ -44,7 +41,9 @@ setUsers(unref(users));
             </td>
             <td class="border px-4 py-2">{{ setTagName(article.tags) }}</td>
             <!--  ユーザー機能ができ次第表示（現在は仮の値） -->
-            <td class="border px-4 py-2">{{ setUserName(article.userId) }}</td>
+            <td class="border px-4 py-2">
+              {{ setUserName(article.userId, users) }}
+            </td>
             <td class="border px-4 py-2">
               {{ formatDate(article.updatedAt) }}
             </td>

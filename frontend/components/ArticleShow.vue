@@ -2,16 +2,18 @@
 import { Article } from "~/types/article";
 import MdEditor from "md-editor-v3";
 import { formatDate, setTagName, setUserName } from "~/util/format";
+import { User } from "~/types/user";
 
 interface Props {
   value: Article;
 }
 const props = defineProps<Props>();
+const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
 </script>
 
 <template>
   <div class="flex text-2xl mt-4">
-    <h1 class="mr-10">{{ setUserName(props.value.userId) }}</h1>
+    <h1 class="mr-10">{{ setUserName(props.value.userId, users) }}</h1>
     <h1>{{ formatDate(props.value.updatedAt) }}</h1>
   </div>
   <div class="flex text-2xl mt-6">

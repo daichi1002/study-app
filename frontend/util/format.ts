@@ -1,4 +1,5 @@
 import { ArticleTag } from "~/types/article";
+import { User } from "~/types/user";
 
 // 日付のフォーマット
 export const formatDate = (date: string | null): string => {
@@ -24,10 +25,9 @@ export const setTagName = (tags: ArticleTag[]) => {
 };
 
 // ユーザー名のフォーマット
-export const setUserName = (id: string) => {
-  const { users } = useUser();
+export const setUserName = (id: string, users: User[] | null) => {
   let name = "";
-  users.value?.map((user) => {
+  users?.map((user) => {
     if (user.userId == id) {
       name = user.userName;
       return;

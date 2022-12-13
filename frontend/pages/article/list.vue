@@ -1,24 +1,16 @@
 <script setup lang="ts">
-import { Article, ArticleTag } from "~/types/article";
-import { formatDate } from "~/util/date";
+import { Article } from "~/types/article";
+import { User } from "~/types/user";
+import { formatDate, setTagName, setUserName } from "~/util/format";
 
-// const config = await useRuntimeConfig();
 const { data: articles } = await useFetch<Article[]>(
   `http://localhost:8080/article/list`
 );
 
-const setTagName = (tags: ArticleTag[]) => {
-  let name = "";
-  const len = tags.length;
-  tags.forEach((tag, i) => {
-    if (len == i + 1) {
-      name += `${tag.tagName}`;
-      return;
-    }
-    name += `${tag.tagName} / `;
-  });
-  return name;
-};
+const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
+
+const { setUsers } = useUser();
+setUsers(unref(users));
 </script>
 <template>
   <div class="container mx-auto">
@@ -52,7 +44,7 @@ const setTagName = (tags: ArticleTag[]) => {
             </td>
             <td class="border px-4 py-2">{{ setTagName(article.tags) }}</td>
             <!--  ユーザー機能ができ次第表示（現在は仮の値） -->
-            <td class="border px-4 py-2">{{ article.userId }}</td>
+            <td class="border px-4 py-2">{{ setUserName(article.userId) }}</td>
             <td class="border px-4 py-2">
               {{ formatDate(article.updatedAt) }}
             </td>

@@ -10,6 +10,7 @@ import (
 func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	articleUsecase := usecase.NewArticleUsecase(repos.ArticleRepository)
 	tagUsecase := usecase.NewTagUsecase(repos.TagRepository)
+	userUsecase := usecase.NewUserUsecase(repos.UserRepository)
 
 	// エンドポイント
 	router.GET("/article/list", func(c *gin.Context) { articleUsecase.GetArticles(c) })
@@ -18,4 +19,5 @@ func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	router.GET("/article/:id", func(c *gin.Context) { articleUsecase.GetArticle(c) })
 	router.PUT("/article/edit/:id", func(c *gin.Context) { articleUsecase.UpdateArticle(c) })
 	router.DELETE("/article/delete/:id", func(c *gin.Context) { articleUsecase.DeleteArticle(c) })
+	router.GET("/users", func(c *gin.Context) { userUsecase.GetUsers(c) })
 }

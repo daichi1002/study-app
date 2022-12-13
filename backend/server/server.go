@@ -20,4 +20,5 @@ func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	router.PUT("/article/edit/:id", func(c *gin.Context) { articleUsecase.UpdateArticle(c) })
 	router.DELETE("/article/delete/:id", func(c *gin.Context) { articleUsecase.DeleteArticle(c) })
 	router.GET("/users", func(c *gin.Context) { userUsecase.GetUsers(c) })
+	router.GET("/", func(c *gin.Context) { articleUsecase.GetRandomArticle(c) })
 }

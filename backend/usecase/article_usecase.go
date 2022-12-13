@@ -4,6 +4,7 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"backend/util"
+	"math/rand"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -101,4 +102,20 @@ func (u *ArticleUsecase) DeleteArticle(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, nil)
+}
+
+func (u *ArticleUsecase) GetRandomArticle(c *gin.Context) {
+	articles, err := u.articleRepository.ListArticles()
+
+	if err != nil {
+		logger.Error(err)
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	// 記事の配列からランダムで生地を1つ選出する
+	index := rand.Intn(len(articles))
+	result := articles[index]
+
+	c.JSON(http.StatusOK, result)
 }

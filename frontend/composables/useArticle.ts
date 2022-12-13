@@ -58,7 +58,7 @@ export const useArticle = () => {
       title: "",
       content: "",
       tags: [],
-      userId: "",
+      userId: "01GKTYV0YZ3MK4ZK34HVWFHAZE",
       updatedAt: null,
     });
   };

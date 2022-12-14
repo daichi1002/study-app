@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -31,7 +32,14 @@ func (u *UserUsecase) GetUsers(c *gin.Context) {
 }
 
 func (u *UserUsecase) Login(c *gin.Context) {
-	loginInfo := model.LoginUser{}
+	loginInfo := &model.LoginUser{}
+	err := c.ShouldBindWith(loginInfo, binding.JSON)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
 	user, err := u.userRepository.GetLoginUser(loginInfo.Email)
 
 	if err != nil {

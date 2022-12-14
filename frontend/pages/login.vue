@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Login } from "~/types/user";
+import { changePage } from "~/util/router";
+
 const login: Login = reactive({ email: "", password: "" });
 
 const handleSubmit = async () => {
@@ -9,11 +11,10 @@ const handleSubmit = async () => {
   });
 
   if (error.value) {
-    throw createError({
-      statusCode: error.value.statusCode,
-      message: "failed to login",
-    });
+    return alert("メールアドレスまたはパスワードが相違しています。");
   }
+
+  changePage("/");
 };
 </script>
 <template>

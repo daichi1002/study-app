@@ -9,6 +9,7 @@ const { data } = await useFetch<Article>(`http://localhost:8080/article/${id}`);
 const { article, setArticle } = useArticle();
 const props = setArticle(data.value);
 
+// TODO:複数回PUTリクエストが送られているので、見直し要
 const updateArticle = async () => {
   // TODO:もっとリッチにしたい
   if (!article.value.title) return alert("タイトルを入力してください");

@@ -1,4 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Login } from "~/types/user";
+const login: Login = reactive({ email: "", password: "" });
+
+const handleSubmit = async () => {
+  const { error } = await useFetch<Login>("http://localhost:8080/login", {
+    method: "POST",
+    body: login,
+  });
+
+  if (error.value) {
+    throw createError({
+      statusCode: error.value.statusCode,
+      message: "failed to login",
+    });
+  }
+};
+</script>
 <template>
   <div class="antialiased">
     <div
@@ -19,7 +36,7 @@
           <span>Login with Google</span>
         </button>
       </div>
-      <form action="" class="my-10">
+      <form @submit.prevent="handleSubmit" class="my-10">
         <div class="flex flex-col space-y-5">
           <label for="email">
             <p class="font-medium text-slate-700 pb-2">Email</p>
@@ -29,6 +46,7 @@
               type="email"
               class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="メールアドレスを入力してください"
+              v-model="login.email"
             />
           </label>
           <label for="password">
@@ -39,11 +57,13 @@
               type="password"
               class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="パスワードを入力してください"
+              v-model="login.password"
             />
           </label>
 
           <button
             class="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center"
+            type="submit"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

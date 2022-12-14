@@ -5,3 +5,8 @@ export type User = {
   userName: string;
   articles: Article[];
 };
+
+export type Login = {
+  email: string;
+  password: string;
+};

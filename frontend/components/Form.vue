@@ -55,20 +55,20 @@ if (article) {
 </script>
 
 <template>
-  <div class="mt-5">
+  <div class="mt-3">
     <div class="flex">
       <div class="mr-8">タイトル</div>
       <div class="text-red-500">{{ titleError }}</div>
     </div>
     <input
-      class="appearance-none border-2 border-gray-300 rounded w-2/4 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+      class="rounded-lg border-transparent flex-1 appearance-none border border-gray-200 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-transparent"
       id="inline-full-name"
       type="text"
       v-model="title"
       @blur="setTitle(title)"
     />
   </div>
-  <div class="mt-4">
+  <div class="mt-3">
     <div>タグ</div>
     <div class="grid grid-cols-5 gap-5">
       <div v-for="(tag, i) in mstTags" :key="i">
@@ -78,7 +78,7 @@ if (article) {
           :value="tag"
           :checked="tag.isChecked"
           @change="setTags(tag)"
-          class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          class="w-4 h-4 bg-white rounded border-gray-200 focus:ring-emerald-300"
         />
         <label :for="tag.tagName + i" class="ml-2 text-sm font-medium">{{
           tag.tagName
@@ -86,7 +86,7 @@ if (article) {
       </div>
     </div>
   </div>
-  <div class="mt-4">
+  <div class="mt-3">
     <div class="flex">
       <div class="mr-8">本文</div>
       <div class="text-red-500">{{ contentError }}</div>

@@ -30,11 +30,11 @@ const saveArticle = async () => {
 </script>
 
 <template>
-  <div class="container mx-auto">
+  <div class="container max-w-8xl px-4 mx-auto sm:px-8">
     <Form />
-    <div class="mt-4 grid grid-cols-9 gap-9">
+    <div class="mt-4 grid grid-cols-12 gap-9">
       <button
-        class="bg-teal-300 hover:bg-teal-500 py-2 px-4 rounded-lg"
+        class="flex-shrink-0 px-4 py-2 text-base text-white bg-emerald-300 rounded-lg shadow-md hover:bg-emerald-500 focus:outline-none"
         @click="saveArticle()"
       >
         保存

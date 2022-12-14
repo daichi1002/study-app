@@ -10,7 +10,7 @@ const { data: articles } = await useFetch<Article[]>(
 const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
 </script>
 <template>
-  <div class="container max-w-5xl px-4 mx-auto sm:px-8">
+  <div class="container max-w-8xl px-4 mx-auto sm:px-8">
     <div class="py-8">
       <div class="flex flex-row justify-between w-full mb-1 sm:mb-0">
         <h2 class="text-2xl leading-tight">投稿記事</h2>
@@ -21,12 +21,12 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
             <div class="relative">
               <input
                 type="text"
-                class="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                class="rounded-lg border-transparent flex-1 appearance-none border border-gray-200 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-transparent"
                 placeholder="タイトル"
               />
             </div>
             <button
-              class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+              class="flex-shrink-0 px-4 py-2 text-base text-white bg-emerald-300 rounded-lg shadow-md hover:bg-emerald-500 focus:outline-none"
               type="submit"
             >
               検索
@@ -35,31 +35,33 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
         </div>
       </div>
       <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-        <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
+        <div
+          class="inline-block min-w-full overflow-hidden rounded-lg shadow-md"
+        >
           <table class="min-w-full leading-normal">
             <thead>
               <tr>
                 <th
                   scope="col"
-                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
+                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-300"
                 >
                   タイトル
                 </th>
                 <th
                   scope="col"
-                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
+                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-300"
                 >
                   タグ
                 </th>
                 <th
                   scope="col"
-                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
+                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-300"
                 >
                   更新者
                 </th>
                 <th
                   scope="col"
-                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
+                  class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-300"
                 >
                   更新日
                 </th>
@@ -71,19 +73,19 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
             </thead>
             <tbody>
               <tr v-for="article in articles" class="hover:bg-slate-100">
-                <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
                   <NuxtLink :to="`/article/${article.articleId}`">{{
                     article.title
                   }}</NuxtLink>
                 </td>
-                <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
                   {{ setTagName(article.tags) }}
                 </td>
                 <!--  ユーザー機能ができ次第表示（現在は仮の値） -->
-                <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
                   {{ setUserName(article.userId, users) }}
                 </td>
-                <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
                   {{ formatDate(article.updatedAt) }}
                 </td>
               </tr>
@@ -159,10 +161,9 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
   </div>
 
   <NuxtLink to="/article/create">
-    <button
-      class="fixed bottom-8 right-8 rounded-full w-24 py-6 bg-teal-300 hover:bg-teal-500 text-white text-center font-semibold text-5xl"
-    >
-      +
-    </button>
+    <img
+      class="fixed bottom-8 right-8 w-20"
+      src="../../assets/images/plus.png"
+    />
   </NuxtLink>
 </template>

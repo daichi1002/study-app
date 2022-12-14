@@ -12,7 +12,6 @@ func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	tagUsecase := usecase.NewTagUsecase(repos.TagRepository)
 	userUsecase := usecase.NewUserUsecase(repos.UserRepository)
 
-	// エンドポイント
 	router.GET("/article/list", func(c *gin.Context) { articleUsecase.GetArticles(c) })
 	router.GET("/tags", func(c *gin.Context) { tagUsecase.GetTags(c) })
 	router.POST("/article/create", func(c *gin.Context) { articleUsecase.CreateArticle(c) })
@@ -21,4 +20,5 @@ func NewApiServer(router *gin.Engine, repos repository.Repositories) {
 	router.DELETE("/article/delete/:id", func(c *gin.Context) { articleUsecase.DeleteArticle(c) })
 	router.GET("/users", func(c *gin.Context) { userUsecase.GetUsers(c) })
 	router.GET("/", func(c *gin.Context) { articleUsecase.GetRandomArticle(c) })
+	router.POST("/login", func(c *gin.Context) { userUsecase.Login(c) })
 }

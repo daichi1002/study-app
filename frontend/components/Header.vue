@@ -10,10 +10,8 @@
         <NuxtLink to="/article/list" class="mr-5 hover:text-gray-900"
           >記事</NuxtLink
         >
-        <NuxtLink to="/article/list" class="mr-5 hover:text-gray-900"
-          >チーム分け</NuxtLink
-        >
-        <NuxtLink to="/article/list" class="mr-5 hover:text-gray-900"
+        <NuxtLink to="" class="mr-5 hover:text-gray-900">チーム分け</NuxtLink>
+        <NuxtLink to="/user" class="mr-5 hover:text-gray-900"
           >ユーザー</NuxtLink
         >
       </nav>

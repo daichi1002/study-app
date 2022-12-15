@@ -87,11 +87,13 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
                 <td
                   class="px-5 py-5 text-sm bg-white border-b border-gray-200 flex flex-row-reverse"
                 >
-                  <button
-                    class="flex-shrink-0 px-4 py-2 text-base text-white bg-emerald-300 rounded-lg shadow-md hover:bg-emerald-500 focus:outline-none"
-                  >
-                    Detail
-                  </button>
+                  <NuxtLink :to="`/user/${user.userId}`">
+                    <button
+                      class="flex-shrink-0 px-4 py-2 text-base text-white bg-emerald-300 rounded-lg shadow-md hover:bg-emerald-500 focus:outline-none"
+                    >
+                      Detail
+                    </button>
+                  </NuxtLink>
                 </td>
               </tr>
             </tbody>

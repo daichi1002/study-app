@@ -2,8 +2,8 @@ import { ArticleTag } from "~/types/article";
 import { User } from "~/types/user";
 
 // 日付のフォーマット
-export const formatDate = (date: string | null): string => {
-  if (date == null) {
+export const formatDate = (date: string | null | undefined): string => {
+  if (date == null || date == undefined) {
     return "";
   }
   const formatDate = new Date(date);

@@ -31,6 +31,18 @@ func (u *UserUsecase) GetUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
+func (u *UserUsecase) GetUser(c *gin.Context) {
+	id := c.Params.ByName("id")
+	user, err := u.userRepository.GetUser(id)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
+
 func (u *UserUsecase) Login(c *gin.Context) {
 	loginInfo := &model.LoginUser{}
 	err := c.ShouldBindWith(loginInfo, binding.JSON)

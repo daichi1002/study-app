@@ -19,11 +19,13 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.7.3",
     "@vavt/md-editor-extension": "^1.3.0",
+    "apexcharts": "^3.36.3",
     "google-protobuf": "^3.21.2",
     "grpc-tools": "^1.11.3",
     "md-editor-v3": "^2.4.2",
     "ts-protoc-gen": "^0.15.0",
     "vee-validate": "^4.5.8",
+    "vue3-apexcharts": "^1.4.1",
     "yup": "^0.32.11"
   }
 }

@@ -16,6 +16,16 @@ func (r *userRepository) ListUsers() (users []*model.User, err error) {
 	return users, nil
 }
 
+func (r *userRepository) GetUser(id string) (user *model.User, err error) {
+	err = r.DB.Preload("Articles").Where("id = ?", id).Find(&user).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
 func (r *userRepository) GetLoginUser(email string) (user *model.User, err error) {
 	err = r.DB.Preload("Articles").Where("email = ?", email).First(&user).Error
 

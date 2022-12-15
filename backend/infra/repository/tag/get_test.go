@@ -1,6 +1,7 @@
 package tag
 
 import (
+	"backend/domain/repository"
 	"backend/infra"
 	"regexp"
 	"testing"
@@ -11,16 +12,21 @@ import (
 	"gorm.io/gorm"
 )
 
-func NewDbMock() (*gorm.DB, sqlmock.Sqlmock, error) {
+func NewDbMock() (repository.TagRepository, sqlmock.Sqlmock, error) {
 	sqlDB, mock, _ := sqlmock.New()
 	mockDB, err := gorm.Open(postgres.New(postgres.Config{
 		Conn: sqlDB,
 	}), &gorm.Config{})
-	return mockDB, mock, err
+
+	// repository 初期化
+	gormHandler := new(infra.GormHandler)
+	gormHandler.DB = mockDB
+	repository := NewTagRepository(gormHandler)
+	return repository, mock, err
 }
 
 func TestListUsers(t *testing.T) {
-	mockDB, mock, err := NewDbMock()
+	repository, mock, err := NewDbMock()
 	if err != nil {
 		t.Errorf("Failed to initialize mock DB: %v", err)
 	}
@@ -33,11 +39,6 @@ func TestListUsers(t *testing.T) {
 		// 期待されるSQL
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
 		WillReturnRows(rows)
-
-	// repository 初期化
-	gormHandler := new(infra.GormHandler)
-	gormHandler.DB = mockDB
-	repository := NewTagRepository(gormHandler)
 
 	// テスト対象の関数実行
 	_, err = repository.ListTags()

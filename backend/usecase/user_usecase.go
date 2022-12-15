@@ -4,9 +4,7 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"net/http"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"golang.org/x/crypto/bcrypt"
@@ -55,17 +53,18 @@ func (u *UserUsecase) Login(c *gin.Context) {
 		return
 	}
 
-	// JWT
-	claims := jwt.StandardClaims{
-		Issuer:    user.Id,                               // stringに型変換
-		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), // 有効期限
-	}
-	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	token, err := jwtToken.SignedString([]byte("secret"))
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, err.Error())
-		return
-	}
+	// // JWT
+	// claims := jwt.StandardClaims{
+	// 	Issuer:    user.Id,                               // stringに型変換
+	// 	ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), // 有効期限
+	// }
+	// jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	// token, err := jwtToken.SignedString([]byte("secret"))
+	// if err != nil {
+	// 	c.JSON(http.StatusInternalServerError, err.Error())
+	// 	return
+	// }
 
-	c.JSON(http.StatusOK, map[string]string{"jwt": token})
+	// c.JSON(http.StatusOK, map[string]string{"jwt": token})
+	c.JSON(http.StatusOK, nil)
 }

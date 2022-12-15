@@ -2,19 +2,25 @@
 import { Login } from "~/types/user";
 import { changePage } from "~/util/router";
 
-const login: Login = reactive({ email: "", password: "" });
+const { currentUser, login } = useAuth();
+
+const userLogin = async () => {
+  await login();
+};
+
+const loginInfo: Login = reactive({ email: "", password: "" });
 
 const handleSubmit = async () => {
   const { error } = await useFetch<Login>("http://localhost:8080/login", {
     method: "POST",
-    body: login,
+    body: loginInfo,
   });
 
   if (error.value) {
     return alert("メールアドレスまたはパスワードが相違しています。");
   }
 
-  changePage("/");
+  await login();
 };
 </script>
 <template>
@@ -47,7 +53,7 @@ const handleSubmit = async () => {
               type="email"
               class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="メールアドレスを入力してください"
-              v-model="login.email"
+              v-model="loginInfo.email"
             />
           </label>
           <label for="password">
@@ -58,7 +64,7 @@ const handleSubmit = async () => {
               type="password"
               class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="パスワードを入力してください"
-              v-model="login.password"
+              v-model="loginInfo.password"
             />
           </label>
 

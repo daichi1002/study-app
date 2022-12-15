@@ -3,6 +3,10 @@ import { Article } from "~/types/article";
 import { User } from "~/types/user";
 import { formatDate, setTagName, setUserName } from "~/util/format";
 
+definePageMeta({
+  middleware: "auth",
+});
+
 const { data: articles } = await useFetch<Article[]>(
   `http://localhost:8080/article/list`
 );

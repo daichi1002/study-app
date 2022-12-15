@@ -161,9 +161,10 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
   </div>
 
   <NuxtLink to="/article/create">
-    <img
-      class="fixed bottom-8 right-8 w-20"
-      src="../../assets/images/plus.png"
-    />
+    <button
+      class="border-2 border-gray-800 fixed bottom-8 right-8 w-14 h-14 text-4xl duration-200 rounded-full hover:bg-gray-800 hover:text-white focus:outline-none"
+    >
+      +
+    </button>
   </NuxtLink>
 </template>

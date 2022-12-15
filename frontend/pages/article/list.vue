@@ -166,7 +166,7 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
 
   <NuxtLink to="/article/create">
     <button
-      class="border-2 border-gray-800 fixed bottom-8 right-8 w-14 h-14 text-4xl duration-200 rounded-full hover:bg-gray-800 hover:text-white focus:outline-none"
+      class="border-2 border-gray-800 fixed bottom-8 right-8 w-14 h-14 text-2xl duration-200 rounded-full hover:bg-gray-800 hover:text-white focus:outline-none"
     >
       +
     </button>

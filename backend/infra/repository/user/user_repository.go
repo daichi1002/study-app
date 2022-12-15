@@ -1,17 +1,17 @@
-package article
+package user
 
 import (
 	"backend/domain/repository"
 	"backend/infra"
 )
 
-type articleRepository struct {
+type userRepository struct {
 	*infra.GormHandler
 }
 
 // NewArticleRepository NewArticleRepositoryを生成します。.
-func NewArticleRepository(gormHandler *infra.GormHandler) repository.ArticleRepository {
-	return &articleRepository{
+func NewUserRepository(gormHandler *infra.GormHandler) repository.UserRepository {
+	return &userRepository{
 		gormHandler,
 	}
 }

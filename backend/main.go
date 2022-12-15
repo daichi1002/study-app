@@ -4,18 +4,20 @@ import (
 	"backend/constant"
 	"backend/infra"
 	"backend/infra/repository/article"
+	"backend/infra/repository/tag"
+	"backend/infra/repository/user"
 	"backend/server"
-	"log"
-	"net"
-	"os"
-	"os/signal"
-	"syscall"
+	"backend/util"
+	"time"
 
 	domainrepo "backend/domain/repository"
 
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"google.golang.org/grpc/reflection"
 )
+
+var logger = util.NewLogger()
 
 func main() {
 	// 環境変数読み込み
@@ -23,36 +25,31 @@ func main() {
 	// DB初期化処理
 	gormHandler := infra.NewGormHandler()
 
-	// GRPC接続
-	sigCh := make(chan os.Signal, 1)
-	signal.Notify(sigCh, syscall.SIGTERM, syscall.SIGINT)
-
 	repos := domainrepo.Repositories{
 		ArticleRepository: article.NewArticleRepository(gormHandler),
+		TagRepository:     tag.NewTagRepository(gormHandler),
+		UserRepository:    user.NewUserRepository(gormHandler),
 	}
 
-	grpcServer := server.NewGRPCServer(repos)
-	go func() {
-		<-sigCh
-		log.Printf("shutdown signal is called")
-		grpcServer.GracefulStop()
-	}()
+	router := gin.Default()
 
-	listener, err := net.Listen("tcp", ":8080")
+	setCors(router)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	server.NewApiServer(router, repos)
 
-	log.Printf("server start!")
-	// サーバーリフレクションを有効にしています。
-	// 有効にすることでシリアライズせずとも後述する`grpc_cli`で動作確認ができるようになります。
-	reflection.Register(grpcServer)
-	serverErr := grpcServer.Serve(listener)
+	router.Run()
+	logger.Info("server start!")
+}
 
-	if serverErr != nil {
-		log.Fatal(serverErr)
-	}
+func setCors(r *gin.Engine) {
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE"},
+		AllowHeaders:     []string{"Content-Type"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 }
 
 func loadEnv() {

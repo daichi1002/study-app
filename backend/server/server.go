@@ -2,29 +2,23 @@ package server
 
 import (
 	"backend/domain/repository"
-	"backend/pb"
-	"backend/server/interceptor"
-	"backend/server/service"
 	"backend/usecase"
 
-	middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-
-	"google.golang.org/grpc"
+	"github.com/gin-gonic/gin"
 )
 
-func NewGRPCServer(repos repository.Repositories) *grpc.Server {
-	options := make([]grpc.ServerOption, 0)
-	options = append(options, grpc.UnaryInterceptor(
-		middleware.ChainUnaryServer(
-			interceptor.ValidationInterceptor(),
-		)),
-	)
+func NewApiServer(router *gin.Engine, repos repository.Repositories) {
+	articleUsecase := usecase.NewArticleUsecase(repos.ArticleRepository)
+	tagUsecase := usecase.NewTagUsecase(repos.TagRepository)
+	userUsecase := usecase.NewUserUsecase(repos.UserRepository)
 
-	server := grpc.NewServer(options...)
-
-	pb.RegisterArticleServiceServer(server, service.NewArticleService(
-		usecase.NewArticleUsecase(repos.ArticleRepository),
-	))
-
-	return server
+	router.GET("/article/list", func(c *gin.Context) { articleUsecase.GetArticles(c) })
+	router.GET("/tags", func(c *gin.Context) { tagUsecase.GetTags(c) })
+	router.POST("/article/create", func(c *gin.Context) { articleUsecase.CreateArticle(c) })
+	router.GET("/article/:id", func(c *gin.Context) { articleUsecase.GetArticle(c) })
+	router.PUT("/article/edit/:id", func(c *gin.Context) { articleUsecase.UpdateArticle(c) })
+	router.DELETE("/article/delete/:id", func(c *gin.Context) { articleUsecase.DeleteArticle(c) })
+	router.GET("/users", func(c *gin.Context) { userUsecase.GetUsers(c) })
+	router.GET("/", func(c *gin.Context) { articleUsecase.GetRandomArticle(c) })
+	router.POST("/login", func(c *gin.Context) { userUsecase.Login(c) })
 }

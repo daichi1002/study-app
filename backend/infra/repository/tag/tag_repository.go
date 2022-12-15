@@ -1,17 +1,17 @@
-package article
+package tag
 
 import (
 	"backend/domain/repository"
 	"backend/infra"
 )
 
-type articleRepository struct {
+type tagRepository struct {
 	*infra.GormHandler
 }
 
 // NewArticleRepository NewArticleRepositoryを生成します。.
-func NewArticleRepository(gormHandler *infra.GormHandler) repository.ArticleRepository {
-	return &articleRepository{
+func NewTagRepository(gormHandler *infra.GormHandler) repository.TagRepository {
+	return &tagRepository{
 		gormHandler,
 	}
 }

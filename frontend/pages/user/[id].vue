@@ -1,9 +1,19 @@
 <script setup lang="ts">
 import { User } from "~/types/user";
-import { formatDate, setTagName } from "~/util/format";
+import { formatDate } from "~/util/format";
 
 const router = useRoute();
 const { id } = router.params;
+
+const category: Array<string> = [];
+const values: Array<number> = [];
+
+const { data } = await useFetch<User>(`http://localhost:8080/user/${id}`);
+
+data.value?.languages.map((language) => {
+  category.push(language.name);
+  values.push(language.ratio);
+});
 
 const chartOptions = {
   chart: {
@@ -11,26 +21,18 @@ const chartOptions = {
   },
   xaxis: {
     type: "category",
-    categories: [
-      "Go",
-      "Ruby",
-      "TypeScript",
-      "React",
-      "Vue",
-      "Java",
-      "PHP",
-      "Rust",
-    ],
+    categories: category,
+  },
+  yaxis: {
+    max: 100, // 最大値
   },
 };
 const series = [
   {
     name: "series-1",
-    data: [30, 40, 35, 50, 49, 60, 70, 91],
+    data: values,
   },
 ];
-
-const { data } = await useFetch<User>(`http://localhost:8080/user/${id}`);
 </script>
 <template>
   <div class="container max-w-5xl px-4 mx-auto sm:px-8">

@@ -35,3 +35,8 @@ export const setUserName = (id: string, users: User[] | null) => {
   });
   return name;
 };
+
+// parse
+const parsedObject = (json: string) => {
+  return JSON.parse(json);
+};

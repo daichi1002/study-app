@@ -6,14 +6,14 @@ import (
 )
 
 type User struct {
-	Id          string             `json:"userId" gorm:"primaryKey;type:varchar(26);size:26"`
-	UserName    string             `json:"userName" gorm:"type:varchar(20)"`
-	Email       string             `json:"email" gorm:"type:varchar(100)"`
-	Password    string             `json:"password" gorm:"type:varchar(100)"`
-	BirthDay    time.Time          `json:"birthday" gorm:"type:date"`
-	Affiliation string             `json:"affiliation" gorm:"type:varchar(20)"`
-	Articles    []*Article         `json:"articles" gorm:"foreignKey:UserId"`
-	Languages   map[string]float64 `json:"languages" gorm:"-"`
+	Id          string       `json:"userId" gorm:"primaryKey;type:varchar(26);size:26"`
+	UserName    string       `json:"userName" gorm:"type:varchar(20)"`
+	Email       string       `json:"email" gorm:"type:varchar(100)"`
+	Password    string       `json:"password" gorm:"type:varchar(100)"`
+	BirthDay    time.Time    `json:"birthday" gorm:"type:date"`
+	Affiliation string       `json:"affiliation" gorm:"type:varchar(20)"`
+	Articles    []*Article   `json:"articles" gorm:"foreignKey:UserId"`
+	Languages   []*Languages `json:"languages" gorm:"-"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
@@ -21,6 +21,11 @@ type User struct {
 type LoginUser struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+}
+
+type Languages struct {
+	Name  string  `json:"name" gorm:"-"`
+	Ratio float64 `json:"ratio" gorm:"-"`
 }
 
 func (u *User) SetLanguage(languages []map[string]int) {
@@ -47,5 +52,10 @@ func (u *User) SetLanguage(languages []map[string]int) {
 		totalLanguage[key] = math.Round(calcNum*baseNumber) / baseNumber
 	}
 
-	u.Languages = totalLanguage
+	for key, value := range totalLanguage {
+		val := &Languages{}
+		val.Name = key
+		val.Ratio = value
+		u.Languages = append(u.Languages, val)
+	}
 }

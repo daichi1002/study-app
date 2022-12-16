@@ -3,10 +3,14 @@ package usecase
 import (
 	"backend/domain/model"
 	"backend/domain/repository"
+	"context"
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"github.com/google/go-github/v48/github"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -31,13 +35,21 @@ func (u *UserUsecase) GetUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
-func (u *UserUsecase) GetUser(c *gin.Context) {
+func (u *UserUsecase) GetUser(c *gin.Context, ctx context.Context, client *github.Client) {
 	id := c.Params.ByName("id")
 	user, err := u.userRepository.GetUser(id)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
+	}
+
+	opt := &github.RepositoryListOptions{Type: "public"}
+	repos, _, err := client.Repositories.List(ctx, "daichi1002", opt)
+
+	fmt.Println(repos)
+	if _, ok := err.(*github.RateLimitError); ok {
+		log.Println("hit rate limit")
 	}
 
 	c.JSON(http.StatusOK, user)

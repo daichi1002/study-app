@@ -8,6 +8,7 @@ import (
 	"backend/infra/repository/user"
 	"backend/server"
 	"backend/util"
+	"context"
 	"time"
 
 	domainrepo "backend/domain/repository"
@@ -35,7 +36,11 @@ func main() {
 
 	setCors(router)
 
-	server.NewApiServer(router, repos)
+	ctx := context.Background()
+
+	githubClient := server.NewGithubApiClient(ctx)
+
+	server.NewApiServer(ctx, router, repos, githubClient)
 
 	router.Run()
 	logger.Info("server start!")

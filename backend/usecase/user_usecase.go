@@ -4,8 +4,6 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"context"
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -40,17 +38,34 @@ func (u *UserUsecase) GetUser(c *gin.Context, ctx context.Context, client *githu
 	user, err := u.userRepository.GetUser(id)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err.Error())
+		c.JSON(http.StatusInternalServerError, "ユーザーの取得に失敗しました")
+		logger.Error(err.Error())
 		return
 	}
 
 	opt := &github.RepositoryListOptions{Type: "public"}
 	repos, _, err := client.Repositories.List(ctx, "daichi1002", opt)
 
-	fmt.Println(repos)
 	if _, ok := err.(*github.RateLimitError); ok {
-		log.Println("hit rate limit")
+		c.JSON(http.StatusInternalServerError, "Githubとの連携に失敗しました。")
+		logger.Error(err.Error())
+		return
 	}
+
+	// Githubから各リポジトリの使用言語をAPIで取得
+	var languages []map[string]int
+	for _, repo := range repos {
+		name := repo.GetName()
+		res, _, err := client.Repositories.ListLanguages(ctx, "daichi1002", name)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		languages = append(languages, res)
+	}
+	user.SetLanguage(languages)
 
 	c.JSON(http.StatusOK, user)
 }

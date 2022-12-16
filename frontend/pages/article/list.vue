@@ -69,18 +69,16 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
                 >
                   更新日
                 </th>
-                <!-- <th
+                <th
                   scope="col"
                   class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200"
-                ></th> -->
+                ></th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="article in articles" class="hover:bg-slate-100">
                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
-                  <NuxtLink :to="`/article/${article.articleId}`">{{
-                    article.title
-                  }}</NuxtLink>
+                  {{ article.title }}
                 </td>
                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
                   {{ setTagName(article.tags) }}
@@ -91,6 +89,16 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
                 </td>
                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
                   {{ formatDate(article.updatedAt) }}
+                </td>
+                <td class="px-5 py-5 text-sm bg-white border-b border-gray-300">
+                  <NuxtLink :to="`/article/${article.articleId}`"
+                    ><button
+                      class="flex-shrink-0 px-4 py-2 text-base text-white bg-emerald-300 rounded-lg shadow-md hover:bg-emerald-500 focus:outline-none"
+                      type="submit"
+                    >
+                      詳細
+                    </button></NuxtLink
+                  >
                 </td>
               </tr>
             </tbody>

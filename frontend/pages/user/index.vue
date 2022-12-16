@@ -91,7 +91,7 @@ const { data: users } = await useFetch<User[]>("http://localhost:8080/users");
                     <button
                       class="flex-shrink-0 px-4 py-2 text-base text-white bg-emerald-300 rounded-lg shadow-md hover:bg-emerald-500 focus:outline-none"
                     >
-                      Detail
+                      詳細
                     </button>
                   </NuxtLink>
                 </td>
